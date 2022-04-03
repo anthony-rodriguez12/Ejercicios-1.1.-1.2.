@@ -2,28 +2,63 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const Header = ({course}) => <h1>{course}</h1>
-const Content = ({part, excercise}) => <p> {part} {excercise} </p>
-const Total = ({exercises1,exercises2,exercises3}) => {
-  return <p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+const Content = () => {
+  const Lists = List.map( 
+    function(List){
+      return (
+        <div key={List.exercises.toString()}>
+          <Part part={List.part} exercises={List.exercises} />
+        </div>
+      )
+    }
+  )
+  return Lists
 }
+
+const Part = ({part, exercises}) => {
+  return <>
+    <p>{part}  {exercises}</p>
+  </>
+}
+
+const List = [
+  {id: 1,
+  part: 'Fundamentals of React',
+  exercises: 10
+  },
+  {id: 2,
+  part: 'Using props to pass data',
+  exercises: 7
+  },
+  {id: 3,
+  part:'State of a component',
+  exercises: 14
+  }
+]
+const Total = () => {
+  const L = List.map(function(List){ 
+      return (List.exercises)
+    }
+  )
+  const R = L[0] + L[1] + L[2]
+
+  return  <p> Number of exercises {R}</p>
+}
+
+
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
 
   return (
     <div>
       <Header course={course} />
-      <Content part={part1} excercise={exercises1} />
-      <Content part={part2} excercise={exercises2} />
-      <Content part={part3} excercise={exercises3} />
-      <Total exercises1={exercises1} exercises2={exercises2} exercises3={exercises3}/>
+      <Content></Content>
+
+      <Total />
     </div>
   )
 }
+
+
 
 ReactDOM.render(<App />, document.getElementById('root'))
